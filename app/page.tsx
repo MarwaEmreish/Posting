@@ -17,7 +17,12 @@ export default function Home() {
     queryFn: allPosts,
     queryKey: ["posts"],
   })
-  if (error) return error
+
+  if (error) {
+  const err = error as any
+  return <div>Error: {err.response?.data?.message || err.message}</div>
+  }
+
   if (isLoading) return "Loading....."
 
   return (

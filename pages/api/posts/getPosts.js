@@ -15,7 +15,12 @@ export default async function handler(req, res) {
       })
       return res.status(200).json(data)
     } catch (err) {
-      res.status(403).json({ err: "Error has occured while making a post" })
+      console.error("Error fetching posts:", err)
+      return res.status(500).json({ error: "Error occurred while fetching posts" })
     }
+  } else {
+    res.setHeader("Allow", ["GET"])
+    res.status(405).end(`Method ${req.method} Not Allowed`)
   }
 }
+
